@@ -333,9 +333,9 @@ function buildText(art,title,kind){
   art.querySelectorAll("input.fld[data-l]").forEach(x=>L.push(`${x.dataset.l}: ${x.value}`)); L.push("");
   const walk=art.querySelectorAll("h2,h3,p strong:first-child,.opts,textarea.ans,table,input.fld:not([data-l])");
   walk.forEach(el=>{
-    if(el.tagName==="H2"||el.tagName==="H3") L.push("\n== "+el.textContent.replace(/^(Практическа задача|Изследване|Творческа задача|Речник)/,"").trim()+" ==");
+    if(el.tagName==="H2"||el.tagName==="H3") L.push("\n== "+(el.closest(".box")&&el.closest(".box").querySelector(".tag")&&el.tagName==="H2"?"":"")+el.textContent.replace(/^(Практическа задача|Изследване|Творческа задача|Речник|Тест)(?=\S)/,"").trim()+" ==");
     else if(el.tagName==="STRONG"&&/^\d+\./.test(el.textContent)) L.push("\n"+el.parentElement.textContent.trim());
-    else if(el.classList.contains("opts")){ const s=el.querySelector(".opt.sel"); L.push("Избран отговор: "+(s?s.textContent.trim():"(няма)")); }
+    else if(el.classList.contains("opts")){ const s=el.querySelector(".opt.sel"); L.push("Избран отговор: "+(s?s.querySelector("b").textContent+" "+s.querySelector("span").textContent.trim():"(няма)")); }
     else if(el.tagName==="TEXTAREA"){ if(el.value.trim()) L.push(el.value.trim()); }
     else if(el.tagName==="INPUT"){ if(el.value.trim()) L.push("→ "+el.value.trim()); }
     else if(el.tagName==="TABLE"&&el.querySelector("td.cell")){ el.querySelectorAll("tr").forEach(tr=>L.push([...tr.children].map(c=>c.innerText.trim()).join(" | "))); }
