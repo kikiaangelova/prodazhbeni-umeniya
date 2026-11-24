@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Продажбени умения · Кирилка Ангелова</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<style>
+:root{
+  --ink:#1f2433; --muted:#5b6275; --paper:#fbfaf7; --line:#e6e2d8;
+  --p1:#0e8a7e; --p1s:#e3f4f1;
+  --p2:#4b4fc9; --p2s:#e9e9fb;
+  --p3:#e2583e; --p3s:#fdebe6;
+  --gold:#f2a531; --goldS:#fff4df;
+  --violet:#8a3fb4; --violetS:#f4eafa;
+  --accent:var(--p1); --accentS:var(--p1s);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:"PT Sans",system-ui,sans-serif;font-size:18px;line-height:1.6}
+a{color:var(--accent)}
+.layout{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+nav.side{background:#171b29;color:#cfd3de;padding:28px 20px;position:sticky;top:0;height:100vh;overflow:auto}
+nav.side .brand{font-family:Montserrat;font-weight:800;color:#fff;font-size:20px;line-height:1.2;text-decoration:none;display:block;margin-bottom:6px}
+nav.side .author{font-size:14px;color:#8d93a6;margin-bottom:22px}
+nav.side h4{font-family:Montserrat;font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin:22px 0 8px;font-weight:700}
+nav.side a.m{display:flex;gap:10px;align-items:baseline;color:#cfd3de;text-decoration:none;padding:7px 10px;border-radius:8px;font-size:15px;line-height:1.3}
+nav.side a.m b{font-family:Montserrat;font-size:12px;color:#8d93a6;min-width:20px}
+nav.side a.m:hover{background:#242a3d;color:#fff}
+nav.side a.m.on{background:#fff;color:#171b29}
+nav.side a.m.on b{color:inherit}
+main{padding:0 0 80px;min-width:0}
+.wrap{max-width:880px;margin:0 auto;padding:0 40px}
+.hero{color:#fff;padding:56px 0 44px;margin-bottom:34px;background:var(--accent);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-80px;top:-80px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.10)}
+.hero:before{content:"";position:absolute;right:120px;bottom:-120px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.07)}
+.hero .part{font-family:Montserrat;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.hero .num{font-family:Montserrat;font-weight:800;font-size:84px;line-height:1;opacity:.25;position:absolute;right:40px;top:40px}
+.hero h1{font-family:Montserrat;font-weight:800;font-size:40px;line-height:1.15;margin:10px 0 0;max-width:640px}
+.tabs{display:flex;gap:8px;margin-top:26px;position:relative;z-index:1}
+.tabs a{background:rgba(255,255,255,.18);color:#fff;text-decoration:none;padding:9px 16px;border-radius:999px;font-family:Montserrat;font-weight:700;font-size:14px}
+.tabs a.on{background:#fff;color:var(--accent)}
+.tabs button{margin-left:auto;background:transparent;border:2px solid rgba(255,255,255,.6);color:#fff;border-radius:999px;padding:7px 14px;font-family:Montserrat;font-weight:700;font-size:13px;cursor:pointer}
+article h2{font-family:Montserrat;font-weight:800;font-size:27px;line-height:1.25;margin:46px 0 14px;color:var(--ink)}
+article h2 .n{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:0 10px;margin-right:10px;font-size:22px}
+article h3{font-family:Montserrat;font-weight:700;font-size:20px;margin:30px 0 10px;color:var(--accent)}
+article p,article li{max-width:760px}
+article strong{color:#11141e}
+article ul,article ol{padding-left:24px}
+article li{margin:4px 0}
+article table{border-collapse:separate;border-spacing:0;width:100%;margin:18px 0 26px;font-size:16px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+article th{background:var(--accentS);color:var(--ink);text-align:left;font-family:Montserrat;font-size:13px;letter-spacing:.03em;padding:12px 14px;border-bottom:2px solid var(--accent)}
+article td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+article tr:nth-child(even) td{background:#fcfbf8}
+article code{background:#f0ede6;padding:2px 6px;border-radius:5px;font-size:.88em;word-break:break-all}
+article blockquote{margin:18px 0;padding:14px 18px;background:var(--accentS);border-left:5px solid var(--accent);border-radius:0 10px 10px 0}
+article blockquote.try{background:#fff;border:2px dashed var(--accent);border-radius:14px;padding:20px 20px 10px;position:relative;margin:28px 0 30px;box-shadow:0 2px 10px rgba(23,27,41,.04)}
+article blockquote.try:before{content:"✍ Опитай сам";position:absolute;top:-12px;left:16px;background:var(--accent);color:#fff;font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:999px}
+article blockquote.try p>strong:first-child{display:none}
+.box{border-radius:16px;padding:6px 26px 18px;margin:30px 0;position:relative;border:2px solid}
+.box>h2,.box>h3{margin-top:22px!important}
+.box .tag{position:absolute;top:-13px;left:20px;font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:999px;color:#fff}
+.box.goals{background:var(--accentS);border-color:var(--accent)} .box.goals .tag{background:var(--accent)}
+.box.goals h2{font-size:22px}
+.box.case{background:var(--goldS);border-color:var(--gold)} .box.case .tag{background:var(--gold)} .box.case h3{color:#9a5b00}
+.box.disc{background:var(--violetS);border-color:var(--violet)} .box.disc .tag{background:var(--violet)} .box.disc h2{font-size:22px}
+.box.terms{background:#fff;border-color:var(--line)} .box.terms .tag{background:var(--ink)} .box.terms h2{font-size:22px}
+.box.task{background:var(--p3s);border-color:var(--p3)} .box.task .tag{background:var(--p3)}
+.box.src{background:transparent;border:1px dashed var(--line);font-size:15px;color:var(--muted)} .box.src .tag{background:var(--muted)} .box.src h2{font-size:18px}
+.diagram{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin:22px 0;text-align:center;box-shadow:0 2px 10px rgba(23,27,41,.05)}
+.diagram .cap{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:left;margin-bottom:8px}
+.pager{display:flex;justify-content:space-between;gap:16px;margin:60px 0 0;border-top:1px solid var(--line);padding-top:24px}
+.pager a{text-decoration:none;font-family:Montserrat;font-weight:700;font-size:15px;padding:12px 18px;border-radius:12px;background:#fff;border:1px solid var(--line);color:var(--ink);max-width:48%}
+.pager a small{display:block;color:var(--muted);font-weight:500;font-size:12px}
+/* cover */
+.cover{background:#171b29;color:#fff;padding:80px 0 70px;position:relative;overflow:hidden}
+.cover .dots span{position:absolute;border-radius:50%}
+.cover .kicker{font-family:Montserrat;font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:13px;color:var(--gold)}
+.cover h1{font-family:Montserrat;font-weight:800;font-size:56px;line-height:1.05;margin:14px 0 18px;max-width:640px;position:relative}
+.cover p.lead{font-size:20px;color:#cfd3de;max-width:560px;position:relative}
+.cover .by{margin-top:26px;font-family:Montserrat;font-weight:700;position:relative}
+.parts{display:grid;gap:26px;margin:40px 0}
+.partcard h2{font-family:Montserrat;font-weight:800;font-size:22px;margin:0 0 12px;display:flex;align-items:center;gap:12px}
+.partcard h2 i{font-style:normal;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:#fff;font-size:16px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;text-decoration:none;color:var(--ink);border-top:5px solid;transition:transform .15s, box-shadow .15s}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(23,27,41,.08)}
+.card b{font-family:Montserrat;font-size:12px;letter-spacing:.1em;color:var(--muted)}
+.card div{font-family:Montserrat;font-weight:700;font-size:17px;line-height:1.3;margin-top:4px}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0}
+.how div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+.how b{font-family:Montserrat;display:block;margin-bottom:4px}
+.opts{margin:10px 0 24px;max-width:760px}
+.opt{display:flex;gap:10px;align-items:baseline;background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 14px;margin:7px 0;line-height:1.45}
+.opt b{font-family:Montserrat;color:var(--accent);min-width:22px;flex:none}
+article p,article li,article td{overflow-wrap:anywhere}
+.burger{display:none}
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  nav.side{position:fixed;inset:0 auto 0 0;width:280px;transform:translateX(-100%);transition:transform .2s;z-index:20}
+  nav.side.open{transform:none}
+  .burger{display:block;position:fixed;top:12px;left:12px;z-index:30;background:#171b29;color:#fff;border:0;border-radius:10px;padding:9px 13px;font-size:18px}
+  .wrap{padding:0 20px}
+  .hero h1{font-size:30px}.hero .num{font-size:56px;right:16px}
+  .cover h1{font-size:38px}
+  .how{grid-template-columns:1fr}
+  html,body{font-size:17px}
+  .hero{padding:64px 0 30px}
+  .tabs{flex-wrap:wrap}
+  .tabs button{margin-left:0}
+  article table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .box{padding:6px 16px 14px}
+  .opt{padding:10px 12px}
+  .pager{flex-direction:column}
+  .pager a{max-width:100%}
+}
+@media print{ .opt{border:0;padding:2px 0;margin:2px 0} }
+@media print{
+  nav.side,.burger,.tabs,.pager{display:none!important}
+  .layout{display:block} body{background:#fff;font-size:12pt}
+  .hero{-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:24px 0}
+  .box,.diagram,table{break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<button class="burger" onclick="document.querySelector('nav.side').classList.toggle('open')">☰</button>
+<div class="layout">
+  <nav class="side" id="side"></nav>
+  <main id="main"></main>
+</div>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+
+const PARTS=[
+  {name:"Първи срок",color:"var(--p1)",soft:"var(--p1s)",hex:"#0e8a7e"},
+  {name:"Втори срок",color:"var(--p3)",soft:"var(--p3s)",hex:"#e2583e"}
+];
+const MODS=[
+ ["modul-01-stoynost","Продажбата като процес на създаване на стойност",0],
+ ["modul-02-klientat","Клиентът и решението за покупка",0],
+ ["modul-03-komunikatsiya","Комуникация и доверие в продажбите",0],
+ ["modul-04-vaprosi-i-slushane","Въпроси и активно слушане",0],
+ ["modul-05-polza-i-stoynost","От характеристика към полза и стойност",0],
+ ["modul-06-predstavyane","Представяне и препоръчване на решение",0],
+ ["modul-07-vazrazheniya","Възражения, колебания и трудни ситуации",1],
+ ["modul-08-tsena-i-pregovori","Цена, отстъпка и основи на преговорите",1],
+ ["modul-09-digitalna-sreda","Продажба в дигитална среда",1],
+ ["modul-10-sled-prodazhbata","След продажбата: обслужване, лоялност и допълнителна стойност",1],
+ ["modul-11-etika-danni-ai","Етика, клиентски данни и AI в продажбите",1],
+ ["modul-12-simulatsiya","Интегрирана продажбена симулация",1]
+];
+const pad=i=>String(i+1).padStart(2,"0");
+const TOOLS=[]; const TOOLMOD={};
+const side=document.getElementById("side"), main=document.getElementById("main");
+const cache={};
+
+function setAccent(p){
+  document.documentElement.style.setProperty("--accent",PARTS[p].color);
+  document.documentElement.style.setProperty("--accentS",PARTS[p].soft);
+}
+function renderSide(cur){
+  let h=`<a class="brand" href="#/">Продажбени умения</a><div class="author">Кирилка Ангелова</div>`;
+  PARTS.forEach((p,pi)=>{
+    h+=`<h4 style="color:${p.hex}">${p.name}</h4>`;
+    MODS.forEach(([s,t,mp],i)=>{ if(mp!==pi)return;
+      h+=`<a class="m ${cur===i?"on":""}" href="#/${i+1}/urok"><b>${pad(i)}</b><span>${t}</span></a>`;});
+  });
+  h+=`<h4 style="color:#f2a531">Ресурси</h4><a class="m ${cur==="razpredelenie"?"on":""}" href="#/razpredelenie"><b>★</b><span>Тематично разпределение</span></a><a class="m ${cur==="rezervni"?"on":""}" href="#/rezervni"><b>★</b><span>Резервни часове и портфолио</span></a>`;
+  side.innerHTML=h;
+}
+async function getMd(path){
+  if(cache[path])return cache[path];
+  const r=await fetch(path+"?v="+Date.now()); if(!r.ok)throw new Error(path);
+  return cache[path]=await r.text();
+}
+function wrapSections(root){
+  // group each h2 with its following siblings until next h2
+  const kids=[...root.childNodes]; let sec=null; const out=document.createDocumentFragment();
+  for(const n of kids){
+    if(n.nodeType===1 && n.tagName==="H2"){ sec=document.createElement("section"); sec.className="s2"; out.appendChild(sec); sec.appendChild(n); }
+    else if(sec) sec.appendChild(n); else out.appendChild(n);
+  }
+  root.innerHTML=""; root.appendChild(out);
+  // h3 "Пример" groups inside sections
+  root.querySelectorAll("section.s2").forEach(s=>{
+    const nodes=[...s.childNodes]; let box=null;
+    for(const n of nodes){
+      if(box && n.nodeType===1 && n.tagName==="BLOCKQUOTE" && /^Опитай сам/.test(n.textContent.trim())) box=null;
+      if(n.nodeType===1 && n.tagName==="H3"){
+        box=null;
+        if(/^Пример/.test(n.textContent.trim())){ box=mk("case","Пример от практиката"); s.insertBefore(box,n); box.appendChild(n); continue; }
+      }
+      if(box) box.appendChild(n);
+    }
+  });
+  const rules=[[/^Цели на урока/,"goals","Цели на урока"],[/^Въпроси за дискусия/,"disc","Да обсъдим"],[/^Ключови термини/,"terms","Речник"],[/^Практическа задача/,"task","Практическа задача"],[/^Източници/,"src","Източници"],[/^Тест$/,"task","Тест"]];
+  root.querySelectorAll("section.s2").forEach(s=>{
+    const t=s.querySelector("h2").textContent.trim();
+    for(const [re,cls,label] of rules){ if(re.test(t)){ s.classList.add("box",cls); s.insertAdjacentHTML("afterbegin",`<span class="tag">${label}</span>`); break; } }
+    const h=s.querySelector("h2"); const m=h.textContent.match(/^(\d+)\.\s*(.*)$/);
+    if(m && !s.classList.contains("box")) h.innerHTML=`<span class="n">${m[1]}</span>${m[2]}`;
+  });
+}
+function mk(cls,label){const d=document.createElement("div");d.className="box "+cls;d.innerHTML=`<span class="tag">${label}</span>`;return d;}
+
+async function renderModule(i,kind){
+  const RES={razpredelenie:["resursi","Тематично разпределение",0,"razpredelenie.md","36 учебни часа"],rezervni:["resursi","Резервни часове и портфолио",1,"rezervni-chasove.md","Часове 17, 18, 35 и 36"]};
+  const sh=typeof i==="string";
+  const [slug,title,p]=sh?RES[i]:MODS[i]; setAccent(p); renderSide(i);
+  const file=sh?RES[i][3]:(kind==="zadachi"?"zadachi-i-test.md":"urok.md");
+  const jump=kind==="instrumenti";
+  main.innerHTML=`<div class="wrap" style="padding-top:60px">Зареждане…</div>`;
+  let md; try{ md=await getMd(`${slug}/${file}`);}catch(e){ main.innerHTML=`<div class="wrap" style="padding-top:60px">Файлът не можа да се зареди.</div>`; return; }
+  md=md.replace(/^# .*\n/,"");
+  // Отговорите а) б) в) г) да стоят всеки на свой ред, а не слепени в един абзац
+  md=md.replace(/(?:^[а-е]\) .*(?:\n|$))+/gm,blk=>{
+    const rows=blk.trim().split("\n").map(l=>{const m=l.match(/^([а-е]\))\s+(.*)$/);return `<div class="opt"><b>${m[1]}</b><span>${marked.parseInline(m[2])}</span></div>`;});
+    return `<div class="opts">${rows.join("")}</div>\n\n`;
+  });
+  const html=marked.parse(md,{gfm:true});
+  main.innerHTML=`
+  <header class="hero"><div class="wrap">
+    <div class="part">${sh?"Ресурси · "+RES[i][4]:PARTS[p].name+" · Модул "+pad(i)}</div>
+    <div class="num">${sh?"★":pad(i)}</div>
+    <h1>${title}</h1>
+    <div class="tabs">
+      ${sh?"":`<a href="#/${i+1}/urok" class="${kind==="urok"?"on":""}">Урок</a>
+      <a href="#/${i+1}/zadachi" class="${kind==="zadachi"?"on":""}">Задачи и тест</a>
+      ${TOOLS.includes(i+1)?`<a href="#/${i+1}/urok/instrumenti" class="${kind==="instrumenti"?"on":""}">Инструменти</a>`:""}${TOOLMOD[i+1]?`<a href="#/${TOOLMOD[i+1]}/urok">Инструменти</a>`:""}`}
+      <button onclick="window.print()">Печат</button>
+    </div>
+  </div></header>
+  <div class="wrap"><article id="art">${html}</article>
+  <div class="pager">${sh?"<span></span>":i>0?`<a href="#/${i}/urok"><small>Предишен модул</small>${MODS[i-1][1]}</a>`:"<span></span>"}${!sh&&i<MODS.length-1?`<a href="#/${i+2}/urok" style="text-align:right"><small>Следващ модул</small>${MODS[i+1][1]}</a>`:""}</div></div>`;
+  const art=document.getElementById("art");
+  art.querySelectorAll("pre code.language-mermaid").forEach(c=>{
+    const d=document.createElement("div"); d.className="diagram";
+    d.innerHTML=`<div class="cap">Схема</div><pre class="mermaid"></pre>`;
+    d.querySelector(".mermaid").textContent=c.textContent;
+    c.parentElement.replaceWith(d);
+  });
+  wrapSections(art);
+  art.querySelectorAll("blockquote").forEach(q=>{ if(/^Опитай сам/.test(q.textContent.trim())) q.className="try"; });
+  const hex=PARTS[p].hex;
+  mermaid.initialize({startOnLoad:false,theme:"base",fontFamily:"PT Sans",themeVariables:{
+    primaryColor:"#ffffff",primaryBorderColor:hex,primaryTextColor:"#1f2433",lineColor:hex,
+    secondaryColor:"#fff4df",tertiaryColor:"#f4f2ec",fontSize:"16px",
+    cScale0:hex,cScale1:"#f2a531",cScale2:"#8a3fb4",cScale3:"#4b4fc9",cScale4:"#e2583e",cScale5:"#0e8a7e"}});
+  try{ await mermaid.run({nodes:art.querySelectorAll(".mermaid")}); }catch(e){ console.warn(e); }
+  window.scrollTo(0,0);
+  if(jump){ const h=[...art.querySelectorAll("h2")].find(x=>/Инструменти|Clarity/.test(x.textContent)); if(h) h.scrollIntoView({block:"start"}); }
+}
+function renderCover(){
+  setAccent(0); renderSide(-1);
+  let parts="";
+  PARTS.forEach((p,pi)=>{
+    let cards=""; MODS.forEach(([s,t,mp],i)=>{ if(mp!==pi)return;
+      cards+=`<a class="card" style="border-top-color:${p.hex}" href="#/${i+1}/urok"><b>МОДУЛ ${pad(i)}</b><div>${t}</div></a>`;});
+    parts+=`<div class="partcard"><h2><i style="background:${p.hex}">${["I","II"][pi]}</i>${p.name}</h2><div class="cards">${cards}</div></div>`;
+  });
+  main.innerHTML=`
+  <header class="cover"><div class="dots"><span style="width:420px;height:420px;right:-120px;top:-140px;background:#0e8a7e;opacity:.35"></span><span style="width:260px;height:260px;right:200px;bottom:-130px;background:#e2583e;opacity:.35"></span><span style="width:120px;height:120px;right:80px;bottom:60px;background:#f2a531;opacity:.5"></span></div>
+  <div class="wrap">
+    <div class="kicker">Учебен курс · 36 учебни часа</div>
+    <h1>Продажбени умения</h1>
+    <p class="lead">Дванадесет модула: от клиента и въпросите до възраженията, цената, дигиталните канали и етиката. Български примери, симулации, рубрики и тестове.</p>
+    <div class="by">Кирилка Ангелова</div>
+  </div></header>
+  <div class="wrap">
+    <div class="how">
+      <div><b>Урок</b>Понятия, рамки и схеми, обяснени с примери от българския пазар.</div>
+      <div><b>Задачи и тест</b>Казус, симулация с наблюдателски лист и тест от 30 точки.</div>
+      <div><b>Печат</b>Всеки урок се разпечатва отделно с бутона „Печат“.</div>
+    </div>
+    <div class="parts">${parts}<div class="partcard"><h2><i style="background:#f2a531">★</i>Ресурси</h2><div class="cards"><a class="card" style="border-top-color:#f2a531" href="#/razpredelenie"><b>ПЛАН</b><div>Тематично разпределение по часове</div></a><a class="card" style="border-top-color:#f2a531" href="#/rezervni"><b>ЧАСОВЕ 17, 18, 35, 36</b><div>Резервни часове и портфолио</div></a></div></div></div>
+  </div>`;
+  window.scrollTo(0,0);
+}
+function route(){
+  side.classList.remove("open");
+  if(location.hash.startsWith("#/razpredelenie")) return renderModule("razpredelenie");
+  if(location.hash.startsWith("#/rezervni")) return renderModule("rezervni");
+  const m=location.hash.match(/^#\/(\d+)\/(urok|zadachi)(\/instrumenti)?/);
+  if(m){ const i=+m[1]-1; if(MODS[i]) return renderModule(i,m[3]?"instrumenti":m[2]); }
+  renderCover();
+}
+window.addEventListener("hashchange",route); route();
+
+</script>
+</body>
+</html>
