@@ -307,16 +307,28 @@ function makeInteractive(art,key,title,kind){
     opts.forEach((o,j)=>o.addEventListener("click",()=>{ data[k]=data[k]===j?null:j; set(data[k]); save(key,data); })); g.dataset.k=k; });
   // toolbar
   const bar=document.createElement("div"); bar.className="workbar";
-  bar.innerHTML=`<span>✎ Можеш да пишеш направо тук. Записва се на това устройство. <b class="saved">Записано ✓</b></span>
-    <button data-a="dl">Изтегли отговорите</button><button data-a="pr" class="ghost">Печат</button><button data-a="cl" class="ghost">Изчисти</button>`;
+  bar.innerHTML=`<span>✎ Пиши направо тук. Записва се на това устройство. Накрая натисни „Предай на учителя“. <b class="saved">Записано ✓</b></span>
+    <button data-a="send">Предай на учителя</button><button data-a="dl" class="ghost">Изтегли</button><button data-a="pr" class="ghost">Печат</button><button data-a="cl" class="ghost">Изчисти</button>`;
   art.parentElement.insertBefore(bar,art);
   bar.addEventListener("click",e=>{ const a=e.target.dataset.a; if(!a)return;
     if(a==="pr") window.print();
     if(a==="cl"){ if(!confirmClear(bar))return; for(const k in data) delete data[k]; save(key,data); renderModule(+key.split(":")[1]-1,kind); }
-    if(a==="dl") download(art,title,kind); });
+    if(a==="dl") download(art,title,kind);
+    if(a==="send") sendToTeacher(art,title,kind,e.target); });
+}
+const FORM="https://docs.google.com/forms/d/e/1FAIpQLScFBXhAiW89wryW_Nn52T03g4i61B0j1v0WUo-drw7iGtmmeg/formResponse";
+async function sendToTeacher(art,title,kind,btn){
+  const nm=art.querySelector('input.fld[data-l="Име"]'), cl=art.querySelector('input.fld[data-l="Клас"]');
+  const name=(nm&&nm.value.trim())||"", klas=(cl&&cl.value.trim())||"";
+  if(!name||!klas){ btn.textContent="Попълни име и клас горе"; (nm&&!name?nm:cl).focus(); setTimeout(()=>btn.textContent="Предай на учителя",3000); return; }
+  if(btn.dataset.ok!=="1"){ btn.dataset.ok="1"; btn.textContent="Натисни пак, за да изпратиш"; setTimeout(()=>{btn.dataset.ok="";btn.textContent="Предай на учителя";},4000); return; }
+  btn.dataset.ok=""; btn.disabled=true; btn.textContent="Изпращане…";
+  const body=new URLSearchParams({"entry.1079704886":name,"entry.1458651083":klas,"entry.1508682010":title+" · "+(kind==="zadachi"?"Задачи и тест":"Урок"),"entry.985749297":buildText(art,title,kind)});
+  try{ await fetch(FORM,{method:"POST",mode:"no-cors",body}); btn.textContent="Изпратено ✓"; }
+  catch(e){ btn.textContent="Няма връзка. Опитай пак"; btn.disabled=false; }
 }
 function confirmClear(bar){ if(bar.dataset.c==="1"){ bar.dataset.c=""; return true; } bar.dataset.c="1"; const b=bar.querySelector('[data-a="cl"]'); b.textContent="Сигурен ли си? Натисни пак"; setTimeout(()=>{ b.textContent="Изчисти"; bar.dataset.c=""; },3000); return false; }
-function download(art,title,kind){
+function buildText(art,title,kind){
   const L=[`Продажбени умения · ${title} · ${kind==="zadachi"?"Задачи и тест":"Урок"}`,""];
   art.querySelectorAll("input.fld[data-l]").forEach(x=>L.push(`${x.dataset.l}: ${x.value}`)); L.push("");
   const walk=art.querySelectorAll("h2,h3,p strong:first-child,.opts,textarea.ans,table,input.fld:not([data-l])");
@@ -328,7 +340,10 @@ function download(art,title,kind){
     else if(el.tagName==="INPUT"){ if(el.value.trim()) L.push("→ "+el.value.trim()); }
     else if(el.tagName==="TABLE"&&el.querySelector("td.cell")){ el.querySelectorAll("tr").forEach(tr=>L.push([...tr.children].map(c=>c.innerText.trim()).join(" | "))); }
   });
-  const blob=new Blob([L.join("\n")],{type:"text/plain;charset=utf-8"}); const a=document.createElement("a");
+  return L.join("\n");
+}
+function download(art,title,kind){
+  const blob=new Blob([buildText(art,title,kind)],{type:"text/plain;charset=utf-8"}); const a=document.createElement("a");
   const nm=(art.querySelector('input.fld[data-l="Име"]')?.value||"ucenik").replace(/\s+/g,"_");
   a.href=URL.createObjectURL(blob); a.download=`${title.slice(0,40)}_${nm}.txt`; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
 }
