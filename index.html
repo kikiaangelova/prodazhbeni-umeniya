@@ -127,6 +127,8 @@ td.cell:empty:before{content:"✎";color:#c9c3b5}
   .tabs{flex-wrap:wrap}
   .tabs button{margin-left:0}
   article table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .diagram{padding:14px 10px;overflow-x:auto}
+  .diagram svg{min-width:260px}
   .box{padding:6px 16px 14px}
   .opt{padding:10px 12px}
   .pager{flex-direction:column}
@@ -264,7 +266,7 @@ async function renderModule(i,kind){
   art.querySelectorAll("pre code.language-mermaid").forEach(c=>{
     const d=document.createElement("div"); d.className="diagram";
     d.innerHTML=`<div class="cap">Схема</div><pre class="mermaid"></pre>`;
-    d.querySelector(".mermaid").textContent=c.textContent;
+    d.querySelector(".mermaid").textContent=(window.innerWidth<700)?c.textContent.replace(/^(\s*flowchart\s+)LR\b/m,"$1TD"):c.textContent;
     c.parentElement.replaceWith(d);
   });
   wrapSections(art);
