@@ -168,12 +168,13 @@ const MODS=[
  ["modul-07-polza-i-stoynost","От характеристика към полза и стойност",0],
  ["modul-08-predstavyane","Представяне, препоръка и писмена оферта",0],
  ["modul-09-funiya-i-crm","Фунията на продажбите, метрики и CRM",0],
- ["modul-10-vazrazheniya","Възражения, колебания и трудни ситуации",1],
- ["modul-11-tsena-i-pregovori","Цена, отстъпка и основи на преговорите",1],
- ["modul-12-digitalna-sreda","Продажба в дигитална среда",1],
- ["modul-13-sled-prodazhbata","След продажбата: обслужване, лоялност и допълнителна стойност",1],
- ["modul-14-etika-danni-ai","Етика, клиентски данни и AI в продажбите",1],
- ["modul-15-simulatsiya","Интегрирана продажбена симулация",1]
+ ["modul-10-golemite","Как продават големите: интегриран казус",0],
+ ["modul-11-vazrazheniya","Възражения, колебания и трудни ситуации",1],
+ ["modul-12-tsena-i-pregovori","Цена, отстъпка и основи на преговорите",1],
+ ["modul-13-digitalna-sreda","Продажба в дигитална среда",1],
+ ["modul-14-sled-prodazhbata","След продажбата: обслужване, лоялност и допълнителна стойност",1],
+ ["modul-15-etika-danni-ai","Етика, клиентски данни и AI в продажбите",1],
+ ["modul-16-simulatsiya","Интегрирана продажбена симулация",1]
 ];
 const pad=i=>String(i+1).padStart(2,"0");
 const TOOLS=[]; const TOOLMOD={};
@@ -191,7 +192,7 @@ function renderSide(cur){
     MODS.forEach(([s,t,mp],i)=>{ if(mp!==pi)return;
       h+=`<a class="m ${cur===i?"on":""}" href="#/${i+1}/urok"><b>${pad(i)}</b><span>${t}</span></a>`;});
   });
-  h+=`<h4 style="color:#f2a531">Ресурси</h4><a class="m ${cur==="proekt"?"on":""}" href="#/proekt"><b>★</b><span>Проект „Истинска продажба“</span></a><a class="m ${cur==="golemite"?"on":""}" href="#/golemite"><b>★</b><span>Как продават големите</span></a><a class="m ${cur==="rezervni"?"on":""}" href="#/rezervni"><b>★</b><span>Обобщение и портфолио</span></a>`;
+  h+=`<h4 style="color:#f2a531">Ресурси</h4><a class="m ${cur==="proekt"?"on":""}" href="#/proekt"><b>★</b><span>Проект „Истинска продажба“</span></a><a class="m ${cur==="rezervni"?"on":""}" href="#/rezervni"><b>★</b><span>Обобщение и портфолио</span></a>`;
   side.innerHTML=h;
 }
 async function getMd(path){
@@ -230,7 +231,7 @@ function wrapSections(root){
 function mk(cls,label){const d=document.createElement("div");d.className="box "+cls;d.innerHTML=`<span class="tag">${label}</span>`;return d;}
 
 async function renderModule(i,kind){
-  const RES={proekt:["resursi","Проект „Истинска продажба“",2,"istinska-prodazhba.md","Проект за цялата година"],golemite:["resursi","Как продават големите",0,"golemite.md","Казуси за анализ"],rezervni:["resursi","Обобщение, корекция и портфолио",1,"rezervni-chasove.md","Уроци за обобщение"]};
+  const RES={proekt:["resursi","Проект „Истинска продажба“",2,"istinska-prodazhba.md","Проект за цялата година"],rezervni:["resursi","Обобщение, корекция и портфолио",1,"rezervni-chasove.md","Уроци за обобщение"]};
   const sh=typeof i==="string";
   const [slug,title,p]=sh?RES[i]:MODS[i]; setAccent(p); renderSide(i);
   const file=sh?RES[i][3]:(kind==="zadachi"?"zadachi-i-test.md":"urok.md");
@@ -298,6 +299,8 @@ function makeInteractive(art,key,title,kind){
     while(nx&&nx.tagName==="HR"){ const d=nx; nx=nx.nextElementSibling; d.remove(); cnt++; }
     const t=document.createElement("textarea"); t.className="ans"+(cnt<2?" short":""); t.rows=Math.max(2,cnt*2); t.placeholder="Твоят отговор…";
     h.replaceWith(t); bind(t,"value"); });
+  // paragraphs "Задача N" -> textarea after
+  art.querySelectorAll("p").forEach(p=>{ if(/^Задача \d/.test(p.textContent.trim())){ const nx=p.nextElementSibling; if(nx&&(nx.tagName==="TABLE"||nx.tagName==="TEXTAREA"))return; const t=document.createElement("textarea"); t.className="ans"; t.placeholder="Твоят отговор…"; p.after(t); bind(t,"value"); }});
   // "Опитай сам" -> textarea after
   art.querySelectorAll("blockquote.try").forEach(q=>{ const t=document.createElement("textarea"); t.className="ans"; t.placeholder="Запиши тук какво откри…"; q.appendChild(t); bind(t,"value"); });
   // research / creative boxes in tasks: one big textarea each
@@ -364,7 +367,7 @@ function renderCover(){
   <div class="wrap">
     <div class="kicker">Курс за 11. клас</div>
     <h1>Продажбени умения</h1>
-    <p class="lead">Петнадесет модула: от психологията на клиента, търсенето на клиенти и въпросите до възраженията, преговорите, дигиталните канали и етиката. Казуси от Anthropic, Lovable, Apple, Nike и български бизнеси, симулации, рубрики и тестове.</p>
+    <p class="lead">Шестнадесет модула: от психологията на клиента, търсенето на клиенти и въпросите до възраженията, преговорите, дигиталните канали и етиката. Казуси от Anthropic, Lovable, Apple, Nike и български бизнеси, симулации, рубрики и тестове.</p>
     <div class="by">Кирилка Ангелова</div>
   </div></header>
   <div class="wrap">
@@ -373,14 +376,14 @@ function renderCover(){
       <div><b>Задачи и тест</b>Казус, симулация с наблюдателски лист и тест от 30 точки.</div>
       <div><b>Печат</b>Всеки урок се разпечатва отделно с бутона „Печат“.</div>
     </div>
-    <div class="parts">${parts}<div class="partcard"><h2><i style="background:#f2a531">★</i>Ресурси</h2><div class="cards"><a class="card" style="border-top-color:#f2a531" href="#/proekt"><b>ПРОЕКТ</b><div>„Истинска продажба“ през цялата година</div></a><a class="card" style="border-top-color:#f2a531" href="#/golemite"><b>КАЗУСИ</b><div>Как продават големите: Anthropic, Lovable, Apple, Nike и др.</div></a><a class="card" style="border-top-color:#f2a531" href="#/rezervni"><b>ОБОБЩЕНИЕ</b><div>Корекция, проверка на напредъка и портфолио</div></a></div></div></div>
+    <div class="parts">${parts}<div class="partcard"><h2><i style="background:#f2a531">★</i>Ресурси</h2><div class="cards"><a class="card" style="border-top-color:#f2a531" href="#/proekt"><b>ПРОЕКТ</b><div>„Истинска продажба“ през цялата година</div></a><a class="card" style="border-top-color:#f2a531" href="#/rezervni"><b>ОБОБЩЕНИЕ</b><div>Корекция, проверка на напредъка и портфолио</div></a></div></div></div>
   </div>`;
   window.scrollTo(0,0);
 }
 function route(){
   side.classList.remove("open");
   if(location.hash.startsWith("#/proekt")) return renderModule("proekt");
-  if(location.hash.startsWith("#/golemite")) return renderModule("golemite");
+  if(location.hash.startsWith("#/golemite")){ location.replace("#/10/urok"); return; }
   if(location.hash.startsWith("#/rezervni")) return renderModule("rezervni");
   const m=location.hash.match(/^#\/(\d+)\/(urok|zadachi)(\/instrumenti)?/);
   if(m){ const i=+m[1]-1; if(MODS[i]) return renderModule(i,m[3]?"instrumenti":m[2]); }
