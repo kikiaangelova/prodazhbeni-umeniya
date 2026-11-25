@@ -341,12 +341,12 @@ function confirmClear(bar){ if(bar.dataset.c==="1"){ bar.dataset.c=""; return tr
 function buildText(art,title,kind){
   const L=[`Продажбени умения · ${title} · ${kind==="zadachi"?"Задачи и тест":"Урок"}`,""];
   art.querySelectorAll("input.fld[data-l]").forEach(x=>L.push(`${x.dataset.l}: ${x.value}`)); L.push("");
-  const walk=art.querySelectorAll("h2,h3,p strong:first-child,.opts,textarea.ans,table,input.fld:not([data-l])");
+  const walk=art.querySelectorAll("h2,h3,p,.opts,textarea.ans,table,input.fld:not([data-l])");
   walk.forEach(el=>{
-    if(el.tagName==="H2"||el.tagName==="H3") L.push("\n== "+(el.closest(".box")&&el.closest(".box").querySelector(".tag")&&el.tagName==="H2"?"":"")+el.textContent.replace(/^(Практическа задача|Изследване|Творческа задача|Речник|Тест)(?=\S)/,"").trim()+" ==");
-    else if(el.tagName==="STRONG"&&/^\d+\./.test(el.textContent)) L.push("\n"+el.parentElement.textContent.trim());
+    if(el.tagName==="H2"||el.tagName==="H3") L.push("\n== "+(el.closest(".box")&&el.closest(".box").querySelector(".tag")&&el.tagName==="H2"?"":"")+el.textContent.replace(/^(Практическа задача|Изследване|Творческа задача|Речник|Тест)(?=[^\s:])/,"").trim()+" ==");
+    else if(el.tagName==="P"){ const t=el.textContent.trim(); if(/^\d+\.\s*\(/.test(t)) L.push("\n"+t); else if(/^Задача \d/.test(t)||(el.nextElementSibling&&el.nextElementSibling.tagName==="TEXTAREA")) L.push("\n"+(t.length>220?t.slice(0,220)+"…":t)); }
     else if(el.classList.contains("opts")){ const s=el.querySelector(".opt.sel"); L.push("Избран отговор: "+(s?s.querySelector("b").textContent+" "+s.querySelector("span").textContent.trim():"(няма)")); }
-    else if(el.tagName==="TEXTAREA"){ if(el.value.trim()) L.push(el.value.trim()); }
+    else if(el.tagName==="TEXTAREA"){ L.push(el.value.trim()||"(няма отговор)"); }
     else if(el.tagName==="INPUT"){ if(el.value.trim()) L.push("→ "+el.value.trim()); }
     else if(el.tagName==="TABLE"&&el.querySelector("td.cell")){ el.querySelectorAll("tr").forEach(tr=>L.push([...tr.children].map(c=>c.innerText.trim()).join(" | "))); }
   });
